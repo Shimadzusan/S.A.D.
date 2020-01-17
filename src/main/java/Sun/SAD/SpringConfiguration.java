@@ -22,6 +22,11 @@ public class SpringConfiguration {
     public DatabaseOne database() throws IOException {
         return new DatabaseOne();
     }
+    /**	..java_bean часовщика..*/
+    @Bean
+    public DatabaseTwo databaseTwo() throws IOException {
+        return new DatabaseTwo();
+    }
     
     @Bean
     public Recognize recognize() throws IOException {

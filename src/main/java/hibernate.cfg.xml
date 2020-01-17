@@ -13,7 +13,7 @@ com.mysql.jdbc.Driver
 
 <!-- Assume ИМЯ ВАШЕЙ БД is the database name -->
 <property name="hibernate.connection.url">
-jdbc:mysql://localhost:3306/luna
+jdbc:mysql://localhost:3306/sun?useEncoding=true&amp;characterEncoding=UTF-8
 </property>
 <property name="hibernate.connection.username">
 root
@@ -23,7 +23,7 @@ root
 </property>
 
 <!-- List of XML mapping files -->
-<mapping resource="sad001.xml"/>
+<mapping resource="sad003.xml"/>
 
 </session-factory>
 </hibernate-configuration>

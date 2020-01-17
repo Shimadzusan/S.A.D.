@@ -26,7 +26,7 @@ public class DatabaseOne implements DatabaseInterface {
 
 	public void setStructuredData() {
 		System.out.println("..writting to database sucssesfull complete");
-		//Launch_two.main();
+		//Launch_two.main_two();
 		
 	}
 	

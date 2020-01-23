@@ -1,5 +1,7 @@
 package database_unit;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 
 public class DatabaseTwo implements DatabaseInterface {
@@ -24,8 +26,8 @@ public class DatabaseTwo implements DatabaseInterface {
 		return databaseConfig;
 	}
 
-	public void setStructuredData() {
-		System.out.println("..writting to database sucssesfull complete");
+	public void setStructuredData(List list) {
+		System.out.println("..writting to database TWO sucssesfull complete");
 		//Launch_two.main();
 		
 	}

@@ -32,5 +32,10 @@ public class SpringConfiguration {
     public Recognize recognize() throws IOException {
         return new Recognize(sourceDisk(), database());
     }
+ //..еще раз вызываем Recognize, а ведь можно то и не создавать еще один recognize, а воспользоваться старым??
+    @Bean
+    public Recognize recognizeTwo() throws IOException {
+        return new Recognize(sourceDisk(), databaseTwo());
+    }
 
 }

@@ -28,8 +28,8 @@ public class SourceDisk implements SourceInterface {
 	private String initData() throws IOException {
 		FileInputStream fin = new FileInputStream(address);  
         byte[] buffer = new byte[fin.available()];
-        	fin.read(buffer, 0, buffer.length);
-        		String s = new String(buffer, "utf-8");
+        fin.read(buffer, 0, buffer.length);
+        String s = new String(buffer, "utf-8");
 		return s;
 	}
 

@@ -7,13 +7,15 @@ import source_unit.*;
 public class Launch {
 
 	public static void main(String[] args) {
+		System.out.println("..point alpha");
+		
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfiguration.class);
 		
 //		Recognize recognize = context.getBean("recognize", Recognize.class);
 //		DatabaseOne base  = context.getBean("database", DatabaseOne.class);
 //		System.out.println(base.getDatabaseArray()[2]);
-		System.out.println("..end");
+		System.out.println("..point omega");
 
 	}
 

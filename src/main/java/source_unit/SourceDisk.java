@@ -14,6 +14,7 @@ public class SourceDisk implements SourceInterface {
 	
 	@Value("${SourceDisk.address}")
 	private String address;
+	//.. other properties
 	
 	public SourceDisk() throws IOException {
 		

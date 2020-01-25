@@ -10,7 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class DatabaseOne implements DatabaseInterface {
-	 private static SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory;
 /*
  *	..взаимодействие с центральными модулями только через интерфсы
  *	..кофигурация базы определяется в файле .properties 
@@ -41,7 +41,9 @@ public class DatabaseOne implements DatabaseInterface {
         for(int i = 0; i < list.size(); i++) {
         	HashMap<String, String> hm = new HashMap<String, String>();
         	hm = (HashMap<String, String>) list.get(i);
-        addSAD(hm.get("date"), hm.get("deals"), Integer.parseInt(hm.get("volume")), hm.get("payment"));
+        	
+        	if (hm.containsKey("deal"))
+        		addSAD(hm.get("date"), hm.get("deal"), Integer.parseInt(hm.get("volume")), hm.get("payment"));
         }
         System.out.println("===================================");
     sessionFactory.close();

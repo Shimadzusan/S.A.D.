@@ -3,6 +3,7 @@ package source_unit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -14,8 +15,8 @@ public class SourceDisk implements SourceInterface {
 	
 	@Value("${SourceDisk.address}")
 	private String address;
-	//.. other properties
-	
+//.. other properties in class Parameters
+
 	public SourceDisk() throws IOException {
 		
 	}
@@ -49,5 +50,10 @@ public class SourceDisk implements SourceInterface {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public Parameters getParameters() {
+		return new Parameters();
+	}
+
 
 }

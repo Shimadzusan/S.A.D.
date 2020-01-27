@@ -11,14 +11,15 @@ import org.hibernate.Transaction;
 
 public class DatabaseOne implements DatabaseInterface {
 	private static SessionFactory sessionFactory;
+	
 /*
  *	..взаимодействие с центральными модулями только через интерфсы
- *	..кофигурация базы определяется в файле .properties 
+ *	..кофигурация базы определяется в файле .properties
+ *	..однако временно конфигурирование будет проводиться в class Parameters
  */
+	
 	@Value("${Database.config}")
 	private String[] databaseArray;
-	
-	private String[] databaseConfig = {"дата","фнд","копия","печать","другое"};
 
 	public String[] getDatabaseArray() {
 		return databaseArray;
@@ -28,25 +29,22 @@ public class DatabaseOne implements DatabaseInterface {
 		this.databaseArray = databaseArray;
 	}
 
-	public String[] getParametrs() {
-		return databaseConfig;
+	public Parameters getParametrs() {
+		return new Parameters();
 	}
 
 	public void setStructuredData(List list) {
-		System.out.println("..writting to database sucssesfull complete");
-		//Launch_two.main_two();
 		sessionFactory = new Configuration().configure().buildSessionFactory();
-		
-		//..writing value to database!
+//..writing value to database!
         for(int i = 0; i < list.size(); i++) {
         	HashMap<String, String> hm = new HashMap<String, String>();
         	hm = (HashMap<String, String>) list.get(i);
         	
-        	if (hm.containsKey("deal"))
+        	if (hm.containsKey("deal"))	//..используем маркер "deal" т.к. list содержит разные HashMap
         		addSAD(hm.get("date"), hm.get("deal"), Integer.parseInt(hm.get("volume")), hm.get("payment"));
         }
-        System.out.println("===================================");
-    sessionFactory.close();
+        System.out.println(".logging ..writting to database sucssesfull complete");
+        sessionFactory.close();
 	}
 	
 	 public void addSAD(String date, String deal, int volume, String payment) {

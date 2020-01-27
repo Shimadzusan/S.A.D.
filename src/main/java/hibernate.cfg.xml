@@ -24,7 +24,7 @@ root
 
 <!-- List of XML mapping files -->
 <mapping resource="sad003.xml"/>
-<mapping resource="sad001.xml"/>
+<mapping resource="sad005.xml"/>
 
 </session-factory>
 </hibernate-configuration>

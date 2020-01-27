@@ -6,4 +6,9 @@ public class SourceWeb implements SourceInterface {
 		return null;
 	}
 
+	public Parameters getParameters() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

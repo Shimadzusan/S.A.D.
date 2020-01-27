@@ -6,4 +6,9 @@ public class SourceVoice implements SourceInterface {
 		return null;
 	}
 
+	public Parameters getParameters() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

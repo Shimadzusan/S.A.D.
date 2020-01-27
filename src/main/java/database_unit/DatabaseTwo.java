@@ -4,17 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 
 public class DatabaseTwo implements DatabaseInterface {
+	private static SessionFactory sessionFactory;
 /*
  *	..взаимодействие с центральными модулями только через интерфсы
  *	..кофигурация базы определяется в файле .properties 
  */
 	@Value("${Database.config}")
 	private String[] databaseArray;
-	
-	private String[] databaseConfig = {"дата","ремонт мч","ремонт эч","консультация","другое"};
 
 	public String[] getDatabaseArray() {
 		return databaseArray;
@@ -24,24 +27,33 @@ public class DatabaseTwo implements DatabaseInterface {
 		this.databaseArray = databaseArray;
 	}
 
-	public String[] getParametrs() {
-		return databaseConfig;
+	public Parameters getParametrs() {
+		return new Parameters();
 	}
 
 	public void setStructuredData(List list) {
-		System.out.println("..writting to database TWO sucssesfull complete");
-		
+		sessionFactory = new Configuration().configure().buildSessionFactory();
 		for(int i = 0; i < list.size(); i++) {
-        	HashMap<String, String> hm = new HashMap<String, String>();
-        	hm = (HashMap<String, String>) list.get(i);
-        	
-        	for(Entry<String, String> entry: hm.entrySet()) {
-        		System.out.println(entry.getKey() + " = " + entry.getValue());
-        	}
-       System.out.println(); 	
-        }
-		//Launch_two.main();
-		
+			HashMap<String, String> hm = new HashMap<String, String>();
+			hm = (HashMap<String, String>) list.get(i);
+			if (hm.containsKey("begin_cash"))	//..используем маркер "begin_cash" т.к. list содержит разные HashMap
+				addSAD(hm.get("date"), Integer.parseInt(hm.get("begin_cash")), Integer.parseInt(hm.get("end_cash")),
+				Integer.parseInt(hm.get("salary")), "");
+		}
+		System.out.println(".logging ..writting to database TWO sucssesfull complete");
+		sessionFactory.close();
 	}
 	
+	public void addSAD(String date, int begin_cash, int end_cash, int salary, String info) {
+		Session session = sessionFactory.openSession();
+			Transaction transaction = null;
+
+			transaction = session.beginTransaction();
+			SAD005 data = new SAD005(date, begin_cash, end_cash, salary, info);
+			session.save(data);
+			transaction.commit();
+			
+		session.close();
+	}
+
 }

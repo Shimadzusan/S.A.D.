@@ -8,15 +8,17 @@ public class SAD003 {
 	private String deal;
 	private int volume;
 	private String payment;
+	private String comment;
 
 	public SAD003() {
 	}
 
-	public SAD003(String date, String deal, int volume, String payment) {
+	public SAD003(String date, String deal, int volume, String payment, String comment) {
 		this.date = date;
 		this.deal = deal;
 		this.volume = volume;
 		this.payment = payment;
+		this.comment = comment;
 	}
 
 	public String getDate() {
@@ -66,6 +68,14 @@ public class SAD003 {
 				"deal: " + this.deal + "\n" +
 				"volume: " + this.volume + "\n" +
 				"payment: " + this.payment + "\n";
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

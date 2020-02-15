@@ -58,6 +58,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.38</version>
         </dependency>
-    
+        
+        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/native2ascii-maven-plugin -->
+		<dependency>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>native2ascii-maven-plugin</artifactId>
+		    <version>1.0-alpha-1</version>
+		</dependency>
+		        
   </dependencies>
 </project>

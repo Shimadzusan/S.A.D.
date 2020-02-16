@@ -24,9 +24,10 @@ public class Recognize {
 	}
 	
 	Recognize(SourceInterface source, DatabaseInterface parameters) throws UnsupportedEncodingException {
+		/*must be universal analizator*/
 		System.out.println("..recognize");
 		divideData(source);
-		universalInitFactureTwo(source, parameters);
+		universalInitFactureThree(source, parameters);
 		universalInitInfo(source, parameters);
 	}
 	
@@ -59,7 +60,7 @@ public class Recognize {
 		for(int i = 0; i < facture.size(); i++) {
 			HashMap<String, String> to_list = new HashMap<String, String>();
 			
-			for(Entry<String, String> entry: parameters.getParametrs().factureDatabaseConfig.entrySet()) {	//..цикл по параметрам б.д.
+			for(Entry<String, String> entry: parameters.getParametrs().getFactureDatabaseConfigAlpha().entrySet()) {	//..цикл по параметрам б.д.
 				 String s = entry.getKey();	//..имя поля в д.б. 
 				 if(entry.getValue() != null) {
 					 int n = Integer.parseInt(entry.getValue());
@@ -74,47 +75,26 @@ public class Recognize {
 	}
 	
 	/**
-	 *	Метод universalInitFactureTwo является вторым вариантом universalInitFacture и предназначен
-	 *	для связывания неструктурированных данных клиента с использованием "Marker"
-	 *	т.к. гибкости используя конфигурационный файл не получается, то есть вариант просто переопределить universalInitFacture
-	 *	используя код из universalInitFactureTwo
+	 *	Метод universalInitFactureThree является вторым вариантом universalInitFacture и предназначен
+	 *	для связывания неструктурированных данных клиента с использованием class "Marker"
+	 *	в будущем должен полностью заменить universalInitFacture
 	 */
-	private void universalInitFactureTwo(SourceInterface source, DatabaseInterface parameters) {
+	private void universalInitFactureThree(SourceInterface source, DatabaseInterface parameters) {
+		String[] factureElement;
 		for(int i = 0; i < facture.size(); i++) {
 			HashMap<String, String> to_list = new HashMap<String, String>();
-			String nameDeal = "";
-			String volume = "";
-			String payment = "";
-			String comment = "";
-			String[] s0s0s = facture.get(i);
-			int markerNumber = -1;
-			
-			for(int a = 0; a < s0s0s.length; a++) {
-				/* searching in s0s0s value for markerNumber */ 
-				if(containsOnlyNumber(s0s0s[a])) {
-					markerNumber = a;	//..must be constainsMarker!!!
-					
-					for(int k = 0; k < markerNumber; k++) {
-						nameDeal += " " + s0s0s[k];
+			factureElement = facture.get(i);
+
+			for(Entry<String, int[]> entry: parameters.getParametrs().getFactureDatabaseConfigBetta(factureElement).entrySet()) {
+				String s = entry.getKey();	//..имя поля в д.б.
+				String forValue = "";
+					for(int k = 0; k < entry.getValue().length; k++) {
+						if(entry.getValue()[k] > -1)
+						forValue += " " + factureElement[entry.getValue()[k]];
 					}
-					
-					volume = s0s0s[a];
-					if(markerNumber < s0s0s.length - 1 && !s0s0s[a + 1].contains("*"))payment = s0s0s[a + 1];
-					/*включаем напрямую в мап, переделать*/
-					to_list.put("deal", nameDeal);
-					to_list.put("volume", volume);
-					to_list.put("payment", payment);
-					to_list.put("date", getDateFormat(customerDate));	//..добавляем дату после форматирования
-					System.out.println("nameDeal: " + nameDeal + " volume: " + volume + " payment: " + payment);
-				}
-				if(s0s0s[a].contains("*")) {
-					for(int k = a; k < s0s0s.length; k++) {
-						comment += " " + s0s0s[k];
-					}
-					comment = comment.substring(2);	//удаляем лишний пробел и звездочку
-				}
-				to_list.put("comment", comment);
+				to_list.put(s, forValue.trim());
 			}
+			to_list.put("date", getDateFormat(customerDate));	//..добавляем дату после форматирования
 			list.add(to_list);
 		}
 		
@@ -130,14 +110,11 @@ public class Recognize {
 		HashMap<String, String> to_list = new HashMap<String, String>();
 	
 		for(Entry<String, String> entry: parameters.getParametrs().infoDatabaseConfig.entrySet()) {
-			 String s = entry.getKey();		//..имя поля в д.б.
-			 String t = entry.getValue();
-
 			 for(int i = 0; i < info.size(); i++) {
 				String value_to_database = "" + getNumber(info.get(i));							
-				if(entry.getValue() != null && !getInfo(source.getParameters().getInfoMarker(),
-				entry.getValue()) && info.get(i).contains(entry.getValue()))to_list.put(s, value_to_database);
-				}
+				if(entry.getValue() != null && !getInfo(source.getParameters().getInfoMarker(), entry.getValue())
+						&& info.get(i).contains(entry.getValue()))to_list.put(entry.getKey(), value_to_database);
+			}
 		}
 					
 		to_list.put("date", getDateFormat(customerDate));
@@ -171,21 +148,5 @@ public class Recognize {
 			}	
 		return Integer.parseInt(number);
 	}
-	
-	/**
-	 *	method containsOnlyNumber returns "true" if variable of the input(String text) has all symbols
-	 *	only as digit,
-	 *	in another case(otherwise) method returns "false"
-	 */
-	private boolean containsOnlyNumber(String text) {
-		char[] ch = text.toCharArray();
-		boolean logicTest = false;
-		int logicCounter = 0;
-			for(int i = 0; i < ch.length; i++) {
-				if(Character.isDigit(ch[i]) || ch[i] == '-') {logicTest = true;logicCounter++;}
-			}
-		if(logicCounter == ch.length && logicTest == true)return logicTest;
-		else return false;
-	}
-	
+
 }

@@ -11,6 +11,22 @@ public class Parameters {
 		factureDatabaseConfig.put("payment", "2");
 	}
 	
+	public final HashMap<String, String> infoDatabaseConfig = new HashMap<String, String>();
+	{
+		infoDatabaseConfig.put("date", null);
+		infoDatabaseConfig.put("begin_cash", "касса утро");
+		infoDatabaseConfig.put("end_cash", "касса вечер");
+		infoDatabaseConfig.put("salary", "зп");
+	}
+
+	public HashMap<String, String> getFactureDatabaseConfigAlpha() {
+		return factureDatabaseConfig;
+	}
+	
+	public HashMap<String, String> getInfoDatabaseConfig() {
+		return infoDatabaseConfig;
+	}
+	
 	/** version two
 	 * ..в сущности "Deal" центральным ориентиром для распознавания является сумма сделки,
 	 * т.е. это всегда число. Таким образом имеем <число(сумма)>, данные слева от числа и данные спарава
@@ -27,55 +43,8 @@ public class Parameters {
 	 * volume = position from facture array
 	 *
 	 */
-	public final HashMap<String, String> factureDatabaseConfigTwo = new HashMap<String, String>();
-	{
-		factureDatabaseConfigTwo.put("date", null);
-		factureDatabaseConfigTwo.put("deal", "leftPart=all");	//.. сделка извлекается при помощи маркера 0
-		factureDatabaseConfigTwo.put("volume", "centralMarker=Integer, т.е. здесь должна быть инструкция?");	//.. объем извлекается при помощи маркера 1
-		factureDatabaseConfigTwo.put("payment", "rightPart=0");
-		factureDatabaseConfigTwo.put("comment", "как здесь передать интервал чисел?");
-
-	}
-	
-	public final HashMap<String, String> infoDatabaseConfig = new HashMap<String, String>();
-	{
-		infoDatabaseConfig.put("date", null);
-		infoDatabaseConfig.put("begin_cash", "касса утро");
-		infoDatabaseConfig.put("end_cash", "касса вечер");
-		infoDatabaseConfig.put("salary", "зп");
+	public  HashMap<String, int[]> getFactureDatabaseConfigBetta(String[] userLine) {
+		return new Marker(userLine).getConfig();
 	}
 
-	public HashMap<String, String> getFactureDatabaseConfig() {
-		return factureDatabaseConfig;
-	}
-	
-	public HashMap<String, String> getInfoDatabaseConfig() {
-		return infoDatabaseConfig;
-	}
-}
-
-class Marker {
-	/*как связать поля таблицы со строками текста пользователя*/
-	/*	МАРКЕР ЭТО КОНФИГУРАЦИОННЫЙ КЛАСС!
-	 *	имена полей таблицы известны
-	 *	в строке пользователя ориентируемся по номеру индекса
-	 * 
-	 */
-	String Marker = "маркер это метод!";
-	
-	HashMap<String, int[]> marker = new HashMap<String, int[]>();
-	{
-		int[] deal = {1,2};
-		int[] payment = {5};
-		marker.put("deal", deal);
-		marker.put("volume", getMarkerNumber());
-		marker.put("payment", payment);
-	}
-	private int[] getMarkerNumber() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
 }
